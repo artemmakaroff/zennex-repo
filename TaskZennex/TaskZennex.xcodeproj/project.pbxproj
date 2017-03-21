@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C09F25F1E7F966000C4C1B3 /* TypeEmployeeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C09F25E1E7F966000C4C1B3 /* TypeEmployeeViewCell.m */; };
 		2CB7DB8A1E7B8E8D00C6DBDD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB7DB891E7B8E8D00C6DBDD /* main.m */; };
 		2CB7DB8D1E7B8E8D00C6DBDD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB7DB8C1E7B8E8D00C6DBDD /* AppDelegate.m */; };
 		2CB7DB931E7B8E8D00C6DBDD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CB7DB911E7B8E8D00C6DBDD /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 		2CB7DBC51E7B987F00C6DBDD /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CB7DBC41E7B987F00C6DBDD /* avatar.png */; };
 		2CB7DBC81E7B9CBA00C6DBDD /* AMGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB7DBC71E7B9CBA00C6DBDD /* AMGroup.m */; };
 		2CB7DBCD1E7BC0DB00C6DBDD /* AddEmployeeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB7DBCC1E7BC0DB00C6DBDD /* AddEmployeeViewController.m */; };
+		2CFC21A71E7E46D300B4C9B5 /* TypeEmployeeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CFC21A61E7E46D200B4C9B5 /* TypeEmployeeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C09F25D1E7F965F00C4C1B3 /* TypeEmployeeViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeEmployeeViewCell.h; sourceTree = "<group>"; };
+		2C09F25E1E7F966000C4C1B3 /* TypeEmployeeViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TypeEmployeeViewCell.m; sourceTree = "<group>"; };
 		2CB7DB851E7B8E8D00C6DBDD /* TaskZennex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskZennex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CB7DB891E7B8E8D00C6DBDD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2CB7DB8B1E7B8E8D00C6DBDD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -64,6 +68,8 @@
 		2CB7DBC71E7B9CBA00C6DBDD /* AMGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMGroup.m; sourceTree = "<group>"; };
 		2CB7DBCB1E7BC0DB00C6DBDD /* AddEmployeeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEmployeeViewController.h; sourceTree = "<group>"; };
 		2CB7DBCC1E7BC0DB00C6DBDD /* AddEmployeeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEmployeeViewController.m; sourceTree = "<group>"; };
+		2CFC21A51E7E46D200B4C9B5 /* TypeEmployeeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeEmployeeViewController.h; sourceTree = "<group>"; };
+		2CFC21A61E7E46D200B4C9B5 /* TypeEmployeeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TypeEmployeeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +182,8 @@
 		2CB7DBCA1E7BC07500C6DBDD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2CFC21A51E7E46D200B4C9B5 /* TypeEmployeeViewController.h */,
+				2CFC21A61E7E46D200B4C9B5 /* TypeEmployeeViewController.m */,
 				2CB7DBCB1E7BC0DB00C6DBDD /* AddEmployeeViewController.h */,
 				2CB7DBCC1E7BC0DB00C6DBDD /* AddEmployeeViewController.m */,
 				2CB7DBBD1E7B92B500C6DBDD /* ListViewController.h */,
@@ -187,6 +195,8 @@
 		2CB7DBCE1E7BCCB700C6DBDD /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				2C09F25D1E7F965F00C4C1B3 /* TypeEmployeeViewCell.h */,
+				2C09F25E1E7F966000C4C1B3 /* TypeEmployeeViewCell.m */,
 				2CB7DBC01E7B93BE00C6DBDD /* ListTableViewCell.h */,
 				2CB7DBC11E7B93BE00C6DBDD /* ListTableViewCell.m */,
 			);
@@ -336,6 +346,8 @@
 				2CB7DBCD1E7BC0DB00C6DBDD /* AddEmployeeViewController.m in Sources */,
 				2CB7DBC21E7B93BE00C6DBDD /* ListTableViewCell.m in Sources */,
 				2CB7DB8A1E7B8E8D00C6DBDD /* main.m in Sources */,
+				2CFC21A71E7E46D300B4C9B5 /* TypeEmployeeViewController.m in Sources */,
+				2C09F25F1E7F966000C4C1B3 /* TypeEmployeeViewCell.m in Sources */,
 				2CB7DBBF1E7B92B500C6DBDD /* ListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

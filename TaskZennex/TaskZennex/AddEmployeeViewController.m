@@ -7,8 +7,9 @@
 //
 
 #import "AddEmployeeViewController.h"
+#import "TypeEmployeeViewController.h"
 
-@interface AddEmployeeViewController () <UITextFieldDelegate>
+@interface AddEmployeeViewController () <UITextFieldDelegate, TypeEmployeeViewControllerDelegate>
 
 @end
 
@@ -130,11 +131,45 @@ static NSTimeInterval kAnimationDuration = 0.4;
                                                                                   action:@selector(handleTap:)];
     [self.view addGestureRecognizer:tapGestures];
     
+
+//    TypeEmployeeViewController *typeEmployeeViewController = [[TypeEmployeeViewController alloc] init];
+//    typeEmployeeViewController.delegate = self;
+//    [self.navigationController pushViewController:typeEmployeeViewController animated:YES];
+    
 }
 
-- (void) dealloc
+- (void)addItemViewController:(TypeEmployeeViewController *)controller didFinishEnteringItem:(NSString *)item
+{
+
+    
+    NSLog(@"This was returned from ViewControllerB %@",item);
+}
+
+- (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+//Создаём Alert Message для пустых полей
+- (void)alertForTextField
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Пусто"
+                                                                             message:@"Необходимо ввести значение, чтобы продолжить!"
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"OK"
+                                                          style:UIAlertActionStyleDefault
+                                                        handler:nil];
+    
+    [alertController addAction:alertAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+}
+//Создаём закрытие для пустых текстовых полей
+- (void)closeAlertView
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - TapGestures
@@ -166,6 +201,8 @@ static NSTimeInterval kAnimationDuration = 0.4;
         [UIView animateWithDuration:kAnimationDuration animations:^{
             [self.firstHoursTextField becomeFirstResponder];
         }];
+    } else {
+        [self alertForTextField];
     }
 }
 
@@ -176,6 +213,8 @@ static NSTimeInterval kAnimationDuration = 0.4;
         [UIView animateWithDuration:kAnimationDuration animations:^{
             [self.secondHoursTextField becomeFirstResponder];
         }];
+    } else {
+        [self alertForTextField];
     }
 }
 
@@ -186,6 +225,8 @@ static NSTimeInterval kAnimationDuration = 0.4;
         [UIView animateWithDuration:kAnimationDuration animations:^{
             [self.numberTextField becomeFirstResponder];
         }];
+    } else {
+        [self alertForTextField];
     }
 }
 
@@ -196,6 +237,8 @@ static NSTimeInterval kAnimationDuration = 0.4;
         [UIView animateWithDuration:kAnimationDuration animations:^{
             [self.numberTextField resignFirstResponder];
         }];
+    } else {
+        [self alertForTextField];
     }
 }
 
@@ -206,6 +249,8 @@ static NSTimeInterval kAnimationDuration = 0.4;
     if ([textField isEqual:self.nameTextField] && self.nameTextField.text.length > 0) {
         [self.salaryTextField becomeFirstResponder];
         
+    } else {
+        [self alertForTextField];
     }
     
     return YES;
@@ -320,7 +365,7 @@ static NSTimeInterval kAnimationDuration = 0.4;
 
 #pragma mark - Notifications
 
-- (void)notificationKeyboardWillShow:(NSNotification*)notification
+- (void)notificationKeyboardWillShow:(NSNotification *)notification
 {
     [UIView animateWithDuration:kAnimationDuration animations: ^{
         CGRect frame = self.view.frame;
@@ -331,7 +376,7 @@ static NSTimeInterval kAnimationDuration = 0.4;
    // NSLog(@"notificationKeyboardWillShow:\n%@", notification.userInfo);
 }
 
-- (void)notificationKeyboardWillHide:(NSNotification*)notification
+- (void)notificationKeyboardWillHide:(NSNotification *)notification
 {
     [UIView animateWithDuration:kAnimationDuration animations: ^{
         CGRect frame = self.view.frame;

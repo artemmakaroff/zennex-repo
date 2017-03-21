@@ -12,9 +12,13 @@
 
 - (NSArray *)employeesGroupArray
 {
+    AMGroup *group = [[AMGroup alloc] init];
+    
     NSArray *array = [[NSArray alloc] initWithObjects:@"Management", @"Employees", @"Bookkeeping", nil];
     
-    return array;
+    group.employeesArray = array;
+    
+    return group.employeesArray;
 }
 
 @end
