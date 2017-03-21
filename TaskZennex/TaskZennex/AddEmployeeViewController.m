@@ -8,8 +8,9 @@
 
 #import "AddEmployeeViewController.h"
 #import "TypeEmployeeViewController.h"
+#import "TypeBookkeepingViewController.h"
 
-@interface AddEmployeeViewController () <UITextFieldDelegate, TypeEmployeeViewControllerDelegate>
+@interface AddEmployeeViewController () <UITextFieldDelegate, TypeEmployeeViewControllerDelegate, TypeBookkeepingViewControllerDelegate>
 
 @end
 
@@ -20,6 +21,11 @@ static NSTimeInterval kAnimationDuration = 0.4;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    //Устанавливаем пустой лейбл для выбора бухгалтера
+    self.positionLabelIsEmpty = YES;
+    
+    //Устанавливаем текст для время обеда/приёма
+    
     //Создаём делегатов для текстовых полей
     self.nameTextField.delegate = self;
     self.salaryTextField.delegate = self;
@@ -27,6 +33,8 @@ static NSTimeInterval kAnimationDuration = 0.4;
     self.secondHoursTextField.delegate = self;
     self.numberTextField.delegate = self;
     
+    //Отключаем ячейку бухгалтера
+    [self.bookkeepingCell setHidden:YES];
     
     //Подписываемся на нотификации клавиатуры
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -131,18 +139,6 @@ static NSTimeInterval kAnimationDuration = 0.4;
                                                                                   action:@selector(handleTap:)];
     [self.view addGestureRecognizer:tapGestures];
     
-
-//    TypeEmployeeViewController *typeEmployeeViewController = [[TypeEmployeeViewController alloc] init];
-//    typeEmployeeViewController.delegate = self;
-//    [self.navigationController pushViewController:typeEmployeeViewController animated:YES];
-    
-}
-
-- (void)addItemViewController:(TypeEmployeeViewController *)controller didFinishEnteringItem:(NSString *)item
-{
-
-    
-    NSLog(@"This was returned from ViewControllerB %@",item);
 }
 
 - (void)dealloc
@@ -150,8 +146,41 @@ static NSTimeInterval kAnimationDuration = 0.4;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+//Метод делегата передающий строку в typeBookkepingLabel
+- (void)addTypeViewController:(TypeBookkeepingViewController *)controller didFinishEnterString:(NSString *)string
+{
+    NSLog(@"%@", string);
+    
+    self.typeBookkepingLabel.text = string;
+}
+
+//Метод делегата передающий строку в positionLabel и разрешающий редактировать текстовые поля
+- (void)addItemViewController:(TypeEmployeeViewController *)controller didFinishEnteringItem:(NSString *)item
+{
+    self.positionLabel.text = item;
+    
+    self.positionLabelIsEmpty = NO;
+    
+    //Отключение ячейки выбора бухгалтерия, если выбран не бухгалтер
+    if ([item isEqualToString:@"Бухгалтерия"]) {
+        [self.bookkeepingCell setHidden:NO];
+
+    } else {
+        [self.bookkeepingCell setHidden:YES];
+    }
+    
+    if ([item isEqualToString:@"Руководство"]) {
+        self.hoursLabel.text = @"Часы приёма";
+        
+    } else {
+        self.hoursLabel.text = @"Часы обеда";
+    }
+}
+
+#pragma mark - Alerts
+
 //Создаём Alert Message для пустых полей
-- (void)alertForTextField
+- (void)alertForEmptyTextField
 {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Пусто"
                                                                              message:@"Необходимо ввести значение, чтобы продолжить!"
@@ -166,6 +195,23 @@ static NSTimeInterval kAnimationDuration = 0.4;
     [self presentViewController:alertController animated:YES completion:nil];
     
 }
+
+- (void)alertForEmptyPositionLabel
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Ошибка"
+                                                                             message:@"Необходимо выбрать тип сотрудника, чтобы продолжить!"
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"OK"
+                                                          style:UIAlertActionStyleDefault
+                                                        handler:nil];
+    
+    [alertController addAction:alertAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+}
+
 //Создаём закрытие для пустых текстовых полей
 - (void)closeAlertView
 {
@@ -194,6 +240,28 @@ static NSTimeInterval kAnimationDuration = 0.4;
     
 }
 
+- (IBAction)openTypeEmployeeViewController:(UIButton *)sender
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    TypeEmployeeViewController *typeEmployeeViewController = [storyboard instantiateViewControllerWithIdentifier:@"TypeEmployeeViewController"];
+    
+    typeEmployeeViewController.delegate = self;
+    
+    [self.navigationController pushViewController:typeEmployeeViewController animated:YES];
+}
+
+- (IBAction)typeBookkeepingButtonAction:(UIButton *)sender
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    TypeBookkeepingViewController *typeBookkeepingViewController = [storyboard instantiateViewControllerWithIdentifier:@"TypeBookkeepingViewController"];
+
+    typeBookkeepingViewController.delegate = self;
+    
+    [self.navigationController pushViewController:typeBookkeepingViewController animated:YES];
+}
+
 //Action для кнопки done salaryTextField
 - (void)doneSalaryTextField:(UIBarButtonItem *)barButton
 {
@@ -201,8 +269,9 @@ static NSTimeInterval kAnimationDuration = 0.4;
         [UIView animateWithDuration:kAnimationDuration animations:^{
             [self.firstHoursTextField becomeFirstResponder];
         }];
+        
     } else {
-        [self alertForTextField];
+        [self alertForEmptyTextField];
     }
 }
 
@@ -213,8 +282,9 @@ static NSTimeInterval kAnimationDuration = 0.4;
         [UIView animateWithDuration:kAnimationDuration animations:^{
             [self.secondHoursTextField becomeFirstResponder];
         }];
+        
     } else {
-        [self alertForTextField];
+        [self alertForEmptyTextField];
     }
 }
 
@@ -225,8 +295,9 @@ static NSTimeInterval kAnimationDuration = 0.4;
         [UIView animateWithDuration:kAnimationDuration animations:^{
             [self.numberTextField becomeFirstResponder];
         }];
+        
     } else {
-        [self alertForTextField];
+        [self alertForEmptyTextField];
     }
 }
 
@@ -237,8 +308,9 @@ static NSTimeInterval kAnimationDuration = 0.4;
         [UIView animateWithDuration:kAnimationDuration animations:^{
             [self.numberTextField resignFirstResponder];
         }];
+        
     } else {
-        [self alertForTextField];
+        [self alertForEmptyTextField];
     }
 }
 
@@ -250,7 +322,7 @@ static NSTimeInterval kAnimationDuration = 0.4;
         [self.salaryTextField becomeFirstResponder];
         
     } else {
-        [self alertForTextField];
+        [self alertForEmptyTextField];
     }
     
     return YES;
@@ -258,8 +330,14 @@ static NSTimeInterval kAnimationDuration = 0.4;
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    return YES;
-    
+    if (self.positionLabelIsEmpty == YES) {
+        [self alertForEmptyPositionLabel];
+        return NO;
+        
+    } else {
+        return YES;
+    }
+
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField

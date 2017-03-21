@@ -14,7 +14,7 @@
 {
     AMGroup *group = [[AMGroup alloc] init];
     
-    NSArray *array = [[NSArray alloc] initWithObjects:@"Management", @"Employees", @"Bookkeeping", nil];
+    NSArray *array = [[NSArray alloc] initWithObjects:@"Руководство", @"Сотрудники", @"Бухгалтерия", nil];
     
     group.employeesArray = array;
     

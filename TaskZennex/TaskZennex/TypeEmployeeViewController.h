@@ -13,9 +13,6 @@
 @interface TypeEmployeeViewController : UITableViewController
 
 @property (strong, nonatomic) NSArray *positionArray;
-@property (weak, nonatomic) IBOutlet UILabel *managementLabel;
-@property (weak, nonatomic) IBOutlet UILabel *employeeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *BokkeepingLabel;
 @property (weak, nonatomic) id <TypeEmployeeViewControllerDelegate> delegate;
 
 @end

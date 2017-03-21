@@ -10,4 +10,6 @@
 
 @interface TypeBookkeepingTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *typeBookkeepingLabel;
+
 @end

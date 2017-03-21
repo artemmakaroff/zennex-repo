@@ -19,17 +19,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.positionArray = [[NSArray alloc] init];
-    
+
     AMGroup *group = [[AMGroup alloc] init];
     
     self.positionArray = [[NSArray alloc] init];
     self.positionArray = [group employeesGroupArray];
-    
-    NSString *itemToPassBack = @"Pass this value back to ViewControllerA";
-    [self.delegate addItemViewController:self didFinishEnteringItem:itemToPassBack];
-    
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,7 +42,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.positionArray.count;;
+    return self.positionArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -63,5 +58,26 @@
     
     return cell;
 }
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    for (UITableViewCell *cell in [tableView visibleCells]) {
+//        cell.accessoryType = UITableViewCellAccessoryNone;
+//    }
+//    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    
+    NSInteger row = indexPath.row;
+    
+    NSString *string = [NSString stringWithFormat:@"%@", self.positionArray[row]];
+
+    [self.delegate addItemViewController:self didFinishEnteringItem:string];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 @end

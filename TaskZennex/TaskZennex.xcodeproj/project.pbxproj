@@ -21,6 +21,9 @@
 		2CB7DBC51E7B987F00C6DBDD /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CB7DBC41E7B987F00C6DBDD /* avatar.png */; };
 		2CB7DBC81E7B9CBA00C6DBDD /* AMGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB7DBC71E7B9CBA00C6DBDD /* AMGroup.m */; };
 		2CB7DBCD1E7BC0DB00C6DBDD /* AddEmployeeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB7DBCC1E7BC0DB00C6DBDD /* AddEmployeeViewController.m */; };
+		2CE709DD1E8151BD00861AFE /* TypeBookkeepingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE709DC1E8151BD00861AFE /* TypeBookkeepingViewController.m */; };
+		2CE709E01E8152E500861AFE /* TypeBookkeepingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE709DF1E8152E500861AFE /* TypeBookkeepingTableViewCell.m */; };
+		2CE709E31E81568F00861AFE /* AMTypeBookkeeping.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE709E21E81568F00861AFE /* AMTypeBookkeeping.m */; };
 		2CFC21A71E7E46D300B4C9B5 /* TypeEmployeeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CFC21A61E7E46D200B4C9B5 /* TypeEmployeeViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +71,12 @@
 		2CB7DBC71E7B9CBA00C6DBDD /* AMGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMGroup.m; sourceTree = "<group>"; };
 		2CB7DBCB1E7BC0DB00C6DBDD /* AddEmployeeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEmployeeViewController.h; sourceTree = "<group>"; };
 		2CB7DBCC1E7BC0DB00C6DBDD /* AddEmployeeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEmployeeViewController.m; sourceTree = "<group>"; };
+		2CE709DB1E8151BD00861AFE /* TypeBookkeepingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeBookkeepingViewController.h; sourceTree = "<group>"; };
+		2CE709DC1E8151BD00861AFE /* TypeBookkeepingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TypeBookkeepingViewController.m; sourceTree = "<group>"; };
+		2CE709DE1E8152E500861AFE /* TypeBookkeepingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeBookkeepingTableViewCell.h; sourceTree = "<group>"; };
+		2CE709DF1E8152E500861AFE /* TypeBookkeepingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TypeBookkeepingTableViewCell.m; sourceTree = "<group>"; };
+		2CE709E11E81568F00861AFE /* AMTypeBookkeeping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTypeBookkeeping.h; sourceTree = "<group>"; };
+		2CE709E21E81568F00861AFE /* AMTypeBookkeeping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMTypeBookkeeping.m; sourceTree = "<group>"; };
 		2CFC21A51E7E46D200B4C9B5 /* TypeEmployeeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeEmployeeViewController.h; sourceTree = "<group>"; };
 		2CFC21A61E7E46D200B4C9B5 /* TypeEmployeeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TypeEmployeeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -173,6 +182,8 @@
 		2CB7DBC91E7BC06A00C6DBDD /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2CE709E11E81568F00861AFE /* AMTypeBookkeeping.h */,
+				2CE709E21E81568F00861AFE /* AMTypeBookkeeping.m */,
 				2CB7DBC61E7B9CBA00C6DBDD /* AMGroup.h */,
 				2CB7DBC71E7B9CBA00C6DBDD /* AMGroup.m */,
 			);
@@ -182,6 +193,8 @@
 		2CB7DBCA1E7BC07500C6DBDD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2CE709DB1E8151BD00861AFE /* TypeBookkeepingViewController.h */,
+				2CE709DC1E8151BD00861AFE /* TypeBookkeepingViewController.m */,
 				2CFC21A51E7E46D200B4C9B5 /* TypeEmployeeViewController.h */,
 				2CFC21A61E7E46D200B4C9B5 /* TypeEmployeeViewController.m */,
 				2CB7DBCB1E7BC0DB00C6DBDD /* AddEmployeeViewController.h */,
@@ -195,6 +208,8 @@
 		2CB7DBCE1E7BCCB700C6DBDD /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				2CE709DE1E8152E500861AFE /* TypeBookkeepingTableViewCell.h */,
+				2CE709DF1E8152E500861AFE /* TypeBookkeepingTableViewCell.m */,
 				2C09F25D1E7F965F00C4C1B3 /* TypeEmployeeViewCell.h */,
 				2C09F25E1E7F966000C4C1B3 /* TypeEmployeeViewCell.m */,
 				2CB7DBC01E7B93BE00C6DBDD /* ListTableViewCell.h */,
@@ -344,8 +359,11 @@
 				2CB7DB8D1E7B8E8D00C6DBDD /* AppDelegate.m in Sources */,
 				2CB7DBC81E7B9CBA00C6DBDD /* AMGroup.m in Sources */,
 				2CB7DBCD1E7BC0DB00C6DBDD /* AddEmployeeViewController.m in Sources */,
+				2CE709DD1E8151BD00861AFE /* TypeBookkeepingViewController.m in Sources */,
 				2CB7DBC21E7B93BE00C6DBDD /* ListTableViewCell.m in Sources */,
+				2CE709E31E81568F00861AFE /* AMTypeBookkeeping.m in Sources */,
 				2CB7DB8A1E7B8E8D00C6DBDD /* main.m in Sources */,
+				2CE709E01E8152E500861AFE /* TypeBookkeepingTableViewCell.m in Sources */,
 				2CFC21A71E7E46D300B4C9B5 /* TypeEmployeeViewController.m in Sources */,
 				2C09F25F1E7F966000C4C1B3 /* TypeEmployeeViewCell.m in Sources */,
 				2CB7DBBF1E7B92B500C6DBDD /* ListViewController.m in Sources */,

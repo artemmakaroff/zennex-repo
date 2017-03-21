@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol TypeBookkeepingViewControllerDelegate;
+
 @interface TypeBookkeepingViewController : UITableViewController
+
+@property (strong, nonatomic) NSArray *bookkepingArray;
+@property (weak, nonatomic) id <TypeBookkeepingViewControllerDelegate> delegate;
+
+@end
+
+@protocol TypeBookkeepingViewControllerDelegate
+
+- (void)addTypeViewController:(TypeBookkeepingViewController *)controller didFinishEnterString:(NSString *)string;
 
 @end
