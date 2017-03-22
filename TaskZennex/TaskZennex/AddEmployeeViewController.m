@@ -141,16 +141,48 @@ static NSTimeInterval kAnimationDuration = 0.4;
     
 }
 
+
+//Метод для проверки заполнености полей
+- (void)emptyTextFieldAndLabels
+{
+    NSInteger textLength = 1;
+    
+    if (self.positionLabel.text.length < textLength) {
+        [self alertForEmptyDictionary];
+        
+    } else if (self.nameTextField.text.length < textLength) {
+        [self alertForEmptyDictionary];
+        
+    } else if (self.salaryTextField.text.length < textLength) {
+        [self alertForEmptyDictionary];
+        
+    } else if (self.firstHoursTextField.text.length < textLength) {
+        [self alertForEmptyDictionary];
+        
+    } else if (self.secondHoursTextField.text.length < textLength) {
+        [self alertForEmptyDictionary];
+        
+    } else if (self.numberTextField.text.length < textLength) {
+        [self alertForEmptyDictionary];
+        
+    }  else if (self.typeBookkepingLabel.text.length < textLength && self.bookkeepingCell.hidden == NO) {
+        [self alertForEmptyDictionary];
+    
+    } else {
+        self.saveButton.backgroundColor = [UIColor blueColor];
+    }
+}
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+#pragma mark - Delegates
+
 //Метод делегата передающий строку в typeBookkepingLabel
 - (void)addTypeViewController:(TypeBookkeepingViewController *)controller didFinishEnterString:(NSString *)string
 {
-    NSLog(@"%@", string);
-    
     self.typeBookkepingLabel.text = string;
 }
 
@@ -182,7 +214,7 @@ static NSTimeInterval kAnimationDuration = 0.4;
 //Создаём Alert Message для пустых полей
 - (void)alertForEmptyTextField
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Пусто"
+    UIAlertController *alertControllerEmptyTextFields = [UIAlertController alertControllerWithTitle:@"Пусто"
                                                                              message:@"Необходимо ввести значение, чтобы продолжить!"
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     
@@ -190,15 +222,15 @@ static NSTimeInterval kAnimationDuration = 0.4;
                                                           style:UIAlertActionStyleDefault
                                                         handler:nil];
     
-    [alertController addAction:alertAction];
+    [alertControllerEmptyTextFields addAction:alertAction];
     
-    [self presentViewController:alertController animated:YES completion:nil];
+    [self presentViewController:alertControllerEmptyTextFields animated:YES completion:nil];
     
 }
 
 - (void)alertForEmptyPositionLabel
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Ошибка"
+    UIAlertController *alertControllerEmptyPositionLabel = [UIAlertController alertControllerWithTitle:@"Ошибка"
                                                                              message:@"Необходимо выбрать тип сотрудника, чтобы продолжить!"
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     
@@ -206,17 +238,32 @@ static NSTimeInterval kAnimationDuration = 0.4;
                                                           style:UIAlertActionStyleDefault
                                                         handler:nil];
     
-    [alertController addAction:alertAction];
+    [alertControllerEmptyPositionLabel addAction:alertAction];
     
-    [self presentViewController:alertController animated:YES completion:nil];
+    [self presentViewController:alertControllerEmptyPositionLabel animated:YES completion:nil];
     
 }
 
-//Создаём закрытие для пустых текстовых полей
-- (void)closeAlertView
+- (void)alertForEmptyDictionary
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    UIAlertController *alertControllerEmptyDictionary = [UIAlertController alertControllerWithTitle:@"Ошибка"
+                                                                             message:@"Необходимо заполнить все поля!"
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"OK"
+                                                          style:UIAlertActionStyleDefault
+                                                        handler:nil];
+    
+    [alertControllerEmptyDictionary addAction:alertAction];
+    
+    [self presentViewController:alertControllerEmptyDictionary animated:YES completion:nil];
 }
+
+//Создаём закрытие для пустых текстовых полей
+//- (void)closeAlertView
+//{
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
 
 #pragma mark - TapGestures
 
@@ -231,13 +278,63 @@ static NSTimeInterval kAnimationDuration = 0.4;
 //Action для кнопки сохранить
 - (IBAction)saveButtonAction:(UIButton *)sender
 {
+    [self emptyTextFieldAndLabels];
     
+    if ([self.positionLabel.text isEqualToString:@"Руководство"]) {
+        self.managementDictionary = [[NSMutableDictionary alloc] init];
+        
+        [self.managementDictionary setValue:self.positionLabel.text forKey:@"position"];
+        [self.managementDictionary setValue:self.nameTextField.text forKey:@"name"];
+        [self.managementDictionary setValue:self.salaryTextField.text forKey:@"salary"];
+        [self.managementDictionary setValue:self.firstHoursTextField.text forKey:@"firstHour"];
+        [self.managementDictionary setValue:self.secondHoursTextField.text forKey:@"secondHour"];
+        [self.managementDictionary setValue:self.numberTextField.text forKey:@"number"];
+        
+        //NSLog(@"Management Dictionary %@", self.managementDictionary);
+        
+        [self.delegate addEmployeeViewController:self endItemDictionary:self.managementDictionary];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    } else if ([self.positionLabel.text isEqualToString:@"Сотрудники"]) {
+        self.employeesDictionary = [[NSMutableDictionary alloc] init];
+    
+        [self.employeesDictionary setValue:self.positionLabel.text forKey:@"position"];
+        [self.employeesDictionary setValue:self.nameTextField.text forKey:@"name"];
+        [self.employeesDictionary setValue:self.salaryTextField.text forKey:@"salary"];
+        [self.employeesDictionary setValue:self.firstHoursTextField.text forKey:@"firstHour"];
+        [self.employeesDictionary setValue:self.secondHoursTextField.text forKey:@"secondHour"];
+        [self.employeesDictionary setValue:self.numberTextField.text forKey:@"number"];
+       // NSLog(@"Employees Dictionary %@", self.employeesDictionary);
+    
+        [self.delegate addEmployeeViewController:self endItemDictionary:self.employeesDictionary];
+        [self.navigationController popViewControllerAnimated:YES];
+    
+    } else if ([self.positionLabel.text isEqualToString:@"Бухгалтерия"]) {
+        self.bookkeepingDictionary = [[NSMutableDictionary alloc] init];
+        
+        [self.bookkeepingDictionary setValue:self.positionLabel.text forKey:@"position"];
+        [self.bookkeepingDictionary setValue:self.nameTextField.text forKey:@"name"];
+        [self.bookkeepingDictionary setValue:self.salaryTextField.text forKey:@"salary"];
+        [self.bookkeepingDictionary setValue:self.firstHoursTextField.text forKey:@"firstHour"];
+        [self.bookkeepingDictionary setValue:self.secondHoursTextField.text forKey:@"secondHour"];
+        [self.bookkeepingDictionary setValue:self.numberTextField.text forKey:@"number"];
+        [self.bookkeepingDictionary setValue:self.typeBookkepingLabel.text forKey:@"typeBookkeeping"];
+        
+        //NSLog(@"Bookkeeping Dictionary %@", self.bookkeepingDictionary);
+        
+        [self.delegate addEmployeeViewController:self endItemDictionary:self.bookkeepingDictionary];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    } else {
+        [self alertForEmptyDictionary];
+    }
+
 }
 
 //Action для кнопки сохранить на tab bar controller
 - (IBAction)saveBarButtonAction:(UIBarButtonItem *)sender
 {
-    
+    [self saveButtonAction:self.saveButton];
 }
 
 - (IBAction)openTypeEmployeeViewController:(UIButton *)sender
@@ -345,9 +442,8 @@ static NSTimeInterval kAnimationDuration = 0.4;
     return YES;
 }
 
-- (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    
     //Создаём ограничения для строк с учётом что пользователь может использовать физическую клавиатуру, или копировать текст
     NSString *stringForNameTextField = @" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZабвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
     NSString *stringForSalaryTextField = @"01234567890.";
@@ -450,8 +546,7 @@ static NSTimeInterval kAnimationDuration = 0.4;
         frame.origin.y = -50;
         [self.view setFrame:frame];
     }];
-    
-   // NSLog(@"notificationKeyboardWillShow:\n%@", notification.userInfo);
+
 }
 
 - (void)notificationKeyboardWillHide:(NSNotification *)notification
@@ -461,8 +556,7 @@ static NSTimeInterval kAnimationDuration = 0.4;
         frame.origin.y = 0;
         [self.view setFrame:frame];
     }];
-    
-    //NSLog(@"notificationKeyboardWillHide:\n%@", notification.userInfo);
+
 }
 
 @end

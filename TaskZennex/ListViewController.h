@@ -10,6 +10,12 @@
 
 @interface ListViewController : UITableViewController
 
-@property (strong, nonatomic)NSArray *sectionArray;
+@property (strong, nonatomic) NSArray *sectionArray;
+@property (strong, nonatomic) NSMutableArray *managementArray;
+@property (strong, nonatomic) NSMutableDictionary *managementDictionary;
+
+
+
+- (IBAction)addBarButtonAction:(UIBarButtonItem *)sender;
 
 @end

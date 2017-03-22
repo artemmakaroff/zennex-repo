@@ -8,8 +8,10 @@
 
 #import "ListViewController.h"
 #import "AMGroup.h"
+#import "AddEmployeeViewController.h"
+#import "ListTableViewCell.h"
 
-@interface ListViewController ()
+@interface ListViewController () <AddEmployeeViewControllerDelegate>
 
 @end
 
@@ -24,12 +26,44 @@
     
     self.sectionArray = [group employeesGroupArray];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableViewWhenNewEmployee) name:@"NewEmployee" object:nil];
+   // self.managementArray = [[NSMutableArray alloc] init];
+    
+   
+}
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)reloadTableViewWhenNewEmployee
+{
+
+}
+
+#pragma mark - Delegates
+- (void)addEmployeeViewController:(AddEmployeeViewController *)controller endItemDictionary:(NSMutableDictionary *)dictionary
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"NewEmployee" object:nil];
+    
+    if ([[dictionary objectForKey:@"position"] isEqualToString:@"Руководство"]) {
+        self.managementDictionary = [[NSMutableDictionary alloc] init];
+        self.managementDictionary = dictionary;
+        ListTableViewCell *cell = [[ListTableViewCell alloc] init];
+        cell.nameLabel = [self.managementDictionary objectForKey:@"name"];
+        
+        self.managementArray = [[NSMutableArray alloc] init];
+        [self.managementArray addObject:self.managementDictionary];
+        NSLog(@"array %@", self.managementArray);
+        NSLog(@"Dictionary %@", self.managementDictionary);
+    }
+
+    
 }
 
 #pragma mark - UITableViewDataSource
@@ -46,11 +80,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    AMGroup *group = [self.sectionArray objectAtIndex:section];
-//    
-//    return [group.employeesArray count] + 1;
-    
-    return 1;
+    return self.managementArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -58,45 +88,26 @@
     
     static NSString *reuseIdentfier = @"reuseIdentfier";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentfier forIndexPath:indexPath];
-
+    ListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentfier forIndexPath:indexPath];
+    
     return cell;
 }
 
+#pragma mark - Actions
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (IBAction)addBarButtonAction:(UIBarButtonItem *)sender
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    AddEmployeeViewController *addEmployeeViewController = [storyboard instantiateViewControllerWithIdentifier:@"AddEmployeeViewController"];
+    
+    addEmployeeViewController.delegate = self;
+    
+    [self.navigationController pushViewController:addEmployeeViewController animated:YES];
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-
 @end
+
+
+
+
+

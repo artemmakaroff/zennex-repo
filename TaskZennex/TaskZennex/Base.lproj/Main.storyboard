@@ -86,7 +86,7 @@
                         <rightBarButtonItems>
                             <barButtonItem systemItem="add" id="mDp-ip-NjI">
                                 <connections>
-                                    <segue destination="Acm-vD-FRG" kind="show" id="LRd-Gh-tRN"/>
+                                    <action selector="addBarButtonAction:" destination="wCb-pz-xYa" id="J61-IR-lGG"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem systemItem="edit" id="0ik-9i-hHm"/>
@@ -95,12 +95,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uEX-Kz-33y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="969" y="-48"/>
+            <point key="canvasLocation" x="-342" y="-49"/>
         </scene>
         <!--Добавление-->
         <scene sceneID="LmT-Xh-ib2">
             <objects>
-                <tableViewController id="Acm-vD-FRG" customClass="AddEmployeeViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AddEmployeeViewController" id="Acm-vD-FRG" customClass="AddEmployeeViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="55" sectionHeaderHeight="28" sectionFooterHeight="28" id="jDE-Ly-6Gl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -336,13 +336,31 @@
                         <outlet property="numberTextField" destination="NJU-o0-kmT" id="1Wk-KP-WiO"/>
                         <outlet property="positionLabel" destination="JHL-hC-QJK" id="Nmh-By-JTO"/>
                         <outlet property="salaryTextField" destination="Vwc-r6-C81" id="Vhn-Cr-FMf"/>
+                        <outlet property="saveBarButton" destination="bsY-hw-k2B" id="PtZ-tL-VJB"/>
+                        <outlet property="saveButton" destination="Eqz-3P-nDp" id="YfF-Pf-aKX"/>
                         <outlet property="secondHoursTextField" destination="Z59-d9-uio" id="o3C-Rw-zk6"/>
                         <outlet property="typeBookkepingLabel" destination="OSW-RR-4NN" id="ndG-J4-tts"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nkm-tM-B7e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1712.8" y="-49.025487256371818"/>
+            <point key="canvasLocation" x="1460" y="-49"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="wOQ-lG-8TO">
+            <objects>
+                <navigationController storyboardIdentifier="addNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Psg-g2-v1c" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="O3H-BL-bWc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Acm-vD-FRG" kind="relationship" relationship="rootViewController" id="R8g-ZY-Ag0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JAy-5E-ykx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="519" y="-49"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CMD-8E-qzl">
@@ -420,7 +438,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BL5-78-zKl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2556" y="649"/>
+            <point key="canvasLocation" x="2556" y="653"/>
         </scene>
         <!--Бухгалтерия-->
         <scene sceneID="bDO-h6-XIA">
@@ -466,7 +484,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pso-H5-78N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3334" y="648"/>
+            <point key="canvasLocation" x="3334" y="654"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dZs-qT-ysc">
@@ -482,7 +500,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ag0-mQ-fKb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="103" y="-48"/>
+            <point key="canvasLocation" x="-1207" y="-49"/>
         </scene>
     </scenes>
     <resources>
