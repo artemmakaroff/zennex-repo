@@ -15,7 +15,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *salaryLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numberLabel;
-@property (weak, nonatomic) IBOutlet UILabel *hourLabel;
+@property (weak, nonatomic) IBOutlet UILabel *firstHoursLabel;
+@property (weak, nonatomic) IBOutlet UILabel *secondHoursLabel;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 
 @end

@@ -13,6 +13,8 @@
 
 @interface ListViewController () <AddEmployeeViewControllerDelegate>
 
+@property (strong, nonatomic)NSMutableArray *dateArray;
+
 @end
 
 @implementation ListViewController
@@ -27,9 +29,11 @@
     self.sectionArray = [group employeesGroupArray];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableViewWhenNewEmployee) name:@"NewEmployee" object:nil];
-   // self.managementArray = [[NSMutableArray alloc] init];
+
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     
-   
+    self.managementArray = [NSMutableArray array];
 }
 
 - (void)dealloc {
@@ -43,27 +47,18 @@
 
 - (void)reloadTableViewWhenNewEmployee
 {
-
+    
 }
 
 #pragma mark - Delegates
 - (void)addEmployeeViewController:(AddEmployeeViewController *)controller endItemDictionary:(NSMutableDictionary *)dictionary
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"NewEmployee" object:nil];
-    
-    if ([[dictionary objectForKey:@"position"] isEqualToString:@"Руководство"]) {
-        self.managementDictionary = [[NSMutableDictionary alloc] init];
-        self.managementDictionary = dictionary;
-        ListTableViewCell *cell = [[ListTableViewCell alloc] init];
-        cell.nameLabel = [self.managementDictionary objectForKey:@"name"];
-        
-        self.managementArray = [[NSMutableArray alloc] init];
-        [self.managementArray addObject:self.managementDictionary];
-        NSLog(@"array %@", self.managementArray);
-        NSLog(@"Dictionary %@", self.managementDictionary);
-    }
+    [self.managementArray addObject:dictionary];
 
+    NSLog(@"%@", self.managementArray);
     
+    [self.tableView reloadData];
+
 }
 
 #pragma mark - UITableViewDataSource
@@ -90,7 +85,16 @@
     
     ListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentfier forIndexPath:indexPath];
     
+    self.managementDictionary = [NSMutableDictionary dictionaryWithDictionary:self.managementArray[indexPath.row]];
+    
+    cell.nameLabel.text = [self.managementDictionary objectForKey:@"name"];
+    cell.salaryLabel.text = [self.managementDictionary objectForKey:@"salary"];
+    cell.firstHoursLabel.text = [self.managementDictionary objectForKey:@"firstHour"];
+    cell.secondHoursLabel.text = [self.managementDictionary objectForKey:@"secondHour"];
+    cell.numberLabel.text = [self.managementDictionary objectForKey:@"number"];
+    
     return cell;
+    
 }
 
 #pragma mark - Actions
@@ -105,6 +109,37 @@
     
     [self.navigationController pushViewController:addEmployeeViewController animated:YES];
 }
+//
+//// Override to support conditional editing of the table view.
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+//    // Return NO if you do not want the specified item to be editable.
+//    return YES;
+//}
+//
+//// Override to support editing the table view.
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//// Delete the row from the data source
+//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+// // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//    }
+//}
+// 
+//
+//
+//// Override to support rearranging the table view.
+//- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+//}
+//
+//
+//
+//// Override to support conditional rearranging of the table view.
+//- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+//// Return NO if you do not want the item to be re-orderable.
+//return YES;
+//}
+
 @end
 
 
