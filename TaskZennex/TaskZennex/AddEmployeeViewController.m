@@ -280,8 +280,6 @@ static NSTimeInterval kAnimationDuration = 0.4;
 {
     [self emptyTextFieldAndLabels];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"NewEmployee" object:nil];
-    
     if ([self.positionLabel.text isEqualToString:@"Руководство"]) {
         self.managementDictionary = [[NSMutableDictionary alloc] init];
         

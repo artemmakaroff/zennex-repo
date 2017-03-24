@@ -13,8 +13,6 @@
 
 @interface ListViewController () <AddEmployeeViewControllerDelegate>
 
-@property (strong, nonatomic)NSMutableArray *dateArray;
-
 @end
 
 @implementation ListViewController
@@ -27,13 +25,13 @@
     AMGroup *group = [[AMGroup alloc] init];
     
     self.sectionArray = [group employeesGroupArray];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableViewWhenNewEmployee) name:@"NewEmployee" object:nil];
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
     self.managementArray = [NSMutableArray array];
+    self.employeeArray = [NSMutableArray array];
+    self.bookkeepingArray = [NSMutableArray array];
 }
 
 - (void)dealloc {
@@ -45,19 +43,26 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)reloadTableViewWhenNewEmployee
-{
-    
-}
-
 #pragma mark - Delegates
 - (void)addEmployeeViewController:(AddEmployeeViewController *)controller endItemDictionary:(NSMutableDictionary *)dictionary
 {
-    [self.managementArray addObject:dictionary];
-
-    NSLog(@"%@", self.managementArray);
+    if ([[dictionary objectForKey:@"position"] isEqualToString:@"Руководство"]) {
+        [self.managementArray addObject:dictionary];
+        NSLog(@"%@", self.managementArray);
     
-    [self.tableView reloadData];
+
+        [self.tableView reloadData];
+
+    } else if ([[dictionary objectForKey:@"position"] isEqualToString:@"Сотрудники"]) {
+        [self.employeeArray addObject:dictionary];
+        NSLog(@"%@", self.managementArray);
+        [self.tableView reloadData];
+    }
+//    } else if ([[dictionary objectForKey:@"position"] isEqualToString:@"Бухгалтерия"]) {
+//        [self.bookkeepingArray addObject:dictionary];
+//        NSLog(@"%@", self.managementArray);
+//        [self.tableView reloadData];
+//    }
 
 }
 
@@ -80,21 +85,26 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:0 inSection:0];
     
     static NSString *reuseIdentfier = @"reuseIdentfier";
     
-    ListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentfier forIndexPath:indexPath];
-    
+    ListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentfier forIndexPath:indexPath1];
+
+
     self.managementDictionary = [NSMutableDictionary dictionaryWithDictionary:self.managementArray[indexPath.row]];
+
     
     cell.nameLabel.text = [self.managementDictionary objectForKey:@"name"];
     cell.salaryLabel.text = [self.managementDictionary objectForKey:@"salary"];
     cell.firstHoursLabel.text = [self.managementDictionary objectForKey:@"firstHour"];
     cell.secondHoursLabel.text = [self.managementDictionary objectForKey:@"secondHour"];
     cell.numberLabel.text = [self.managementDictionary objectForKey:@"number"];
+    cell.typeLabel.text = @"";
+        
+    
     
     return cell;
-    
 }
 
 #pragma mark - Actions
