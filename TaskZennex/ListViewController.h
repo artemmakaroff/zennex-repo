@@ -14,13 +14,14 @@
 @property (strong, nonatomic) NSMutableArray *managementArray;
 @property (strong, nonatomic) NSMutableArray *employeeArray;
 @property (strong, nonatomic) NSMutableArray *bookkeepingArray;
+@property (strong, nonatomic) NSMutableArray *positionArray;
 
 @property (strong, nonatomic) NSMutableDictionary *managementDictionary;
 @property (strong, nonatomic) NSMutableDictionary *employeeDictionary;
 @property (strong, nonatomic) NSMutableDictionary *bookkeepingDictionary;
-
-@property (weak, nonatomic) IBOutlet UIImageView *avatarLabel;
+@property (strong, nonatomic) NSMutableDictionary *positionDictionary;
 
 - (IBAction)addBarButtonAction:(UIBarButtonItem *)sender;
+- (IBAction)editBarButtonAction:(UIBarButtonItem *)sender;
 
 @end

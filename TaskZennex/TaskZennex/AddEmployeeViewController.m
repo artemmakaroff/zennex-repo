@@ -290,8 +290,6 @@ static NSTimeInterval kAnimationDuration = 0.4;
         [self.managementDictionary setValue:self.secondHoursTextField.text forKey:@"secondHour"];
         [self.managementDictionary setValue:self.numberTextField.text forKey:@"number"];
         
-        //NSLog(@"Management Dictionary %@", self.managementDictionary);
-        
         [self.delegate addEmployeeViewController:self endItemDictionary:self.managementDictionary];
         [self.navigationController popViewControllerAnimated:YES];
         
@@ -304,7 +302,6 @@ static NSTimeInterval kAnimationDuration = 0.4;
         [self.employeesDictionary setValue:self.firstHoursTextField.text forKey:@"firstHour"];
         [self.employeesDictionary setValue:self.secondHoursTextField.text forKey:@"secondHour"];
         [self.employeesDictionary setValue:self.numberTextField.text forKey:@"number"];
-       // NSLog(@"Employees Dictionary %@", self.employeesDictionary);
     
         [self.delegate addEmployeeViewController:self endItemDictionary:self.employeesDictionary];
         [self.navigationController popViewControllerAnimated:YES];
@@ -319,8 +316,7 @@ static NSTimeInterval kAnimationDuration = 0.4;
         [self.bookkeepingDictionary setValue:self.secondHoursTextField.text forKey:@"secondHour"];
         [self.bookkeepingDictionary setValue:self.numberTextField.text forKey:@"number"];
         [self.bookkeepingDictionary setValue:self.typeBookkepingLabel.text forKey:@"typeBookkeeping"];
-        
-        //NSLog(@"Bookkeeping Dictionary %@", self.bookkeepingDictionary);
+
         
         [self.delegate addEmployeeViewController:self endItemDictionary:self.bookkeepingDictionary];
         [self.navigationController popViewControllerAnimated:YES];
