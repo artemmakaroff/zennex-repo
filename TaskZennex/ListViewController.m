@@ -36,6 +36,8 @@
     self.positionDictionary = [NSMutableDictionary dictionary];
     self.positionArray = [NSMutableArray array];
     
+    self.editBarButton.title = @"Edit";
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,6 +52,7 @@
         [self.managementArray addObject:dictionary];
 
         [self.positionDictionary setObject:self.managementArray forKey:@"Руководство"];
+        NSLog(@"%@", self.positionDictionary);
         [self.positionArray addObject:self.positionDictionary];
         [self.tableView reloadData];
 
@@ -81,8 +84,8 @@
 {
     if (self.positionArray.count < 1) {
         return @"";
+        
     } else {
-    
     return [self.sectionArray objectAtIndex:section];
     }
 }
@@ -106,10 +109,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     static NSString *reuseIdentfier = @"reuseIdentfier";
     
     ListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentfier forIndexPath:indexPath];
 
+    
     if (indexPath.section == 0) {
         self.managementDictionary = [NSMutableDictionary dictionaryWithDictionary:self.managementArray[indexPath.row]];
         
@@ -141,7 +146,7 @@
         cell.typeLabel.text = [NSString stringWithFormat:@"Тип бухгалтера: %@", [self.bookkeepingDictionary objectForKey:@"typeBookkeeping"]];
 
     }
-
+    
     return cell;
 }
 
@@ -159,15 +164,53 @@
     
 }
 
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return indexPath.row > 0;
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        if (indexPath.section == 0) {
+            [self.managementArray removeObjectAtIndex:indexPath.row];
+            
+            [self.tableView beginUpdates];
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            [self.tableView endUpdates];
+            
+        } else if (indexPath.section == 1) {
+            [self.employeeArray removeObjectAtIndex:indexPath.row];
+            
+            [self.tableView beginUpdates];
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            [self.tableView endUpdates];
+            
+        } else if (indexPath.section == 2) {
+            [self.bookkeepingArray removeObjectAtIndex:indexPath.row];
+            
+            [self.tableView beginUpdates];
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            [self.tableView endUpdates];
+        }
+    }
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
     
-    
+}
+
+#pragma mark - UITableViewDelegate
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"Удалить";
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
 }
 
 #pragma mark - Actions
@@ -188,38 +231,14 @@
     BOOL isEditing = self.tableView.editing;
         
     [self.tableView setEditing:!isEditing animated:YES];
-}
+    
+    if (self.tableView.editing) {
+        self.editBarButton.title = @"Done";
+    } else if (!(self.tableView.editing)) {
+        self.editBarButton.title = @"Edit";
+    }
 
-//
-//// Override to support conditional editing of the table view.
-//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-//    // Return NO if you do not want the specified item to be editable.
-//    return YES;
-//}
-//
-//// Override to support editing the table view.
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//// Delete the row from the data source
-//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-// // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-//    }
-//}
-// 
-//
-//
-//// Override to support rearranging the table view.
-//- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-//}
-//
-//
-//
-//// Override to support conditional rearranging of the table view.
-//- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-//// Return NO if you do not want the item to be re-orderable.
-//return YES;
-//}
+}
 
 @end
 

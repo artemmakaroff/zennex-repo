@@ -10,5 +10,17 @@
 
 @interface GalleryViewController : UIViewController
 
+@property (strong, nonatomic) NSArray *galleryArray;
+
+@property (strong, nonatomic) IBOutlet UIScrollView *galleryScrollView;
+@property (strong, nonatomic) IBOutlet UIImageView *galleryImageView;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
+
+- (IBAction)backButtonAction:(UIButton *)sender;
+- (IBAction)nextButtonAction:(UIButton *)sender;
+
+- (void)readDataFromJSON;
+- (void)ignoringInteractionEvents;
 
 @end

@@ -10,4 +10,9 @@
 
 @interface GalleryDownloader : NSObject
 
++ (GalleryDownloader *)parserManager;
+
+- (NSArray *)parsingJSON;
+
+
 @end

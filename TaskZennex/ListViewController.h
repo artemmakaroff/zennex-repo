@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSMutableDictionary *employeeDictionary;
 @property (strong, nonatomic) NSMutableDictionary *bookkeepingDictionary;
 @property (strong, nonatomic) NSMutableDictionary *positionDictionary;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButton;
 
 - (IBAction)addBarButtonAction:(UIBarButtonItem *)sender;
 - (IBAction)editBarButtonAction:(UIBarButtonItem *)sender;
