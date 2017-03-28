@@ -10,7 +10,7 @@
 #import "GalleryDownloader.h"
 #import "GalleryModel.h"
 
-@interface GalleryViewController ()
+@interface GalleryViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @end
 
@@ -19,6 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    
     [self readDataFromJSON];
 
     CGRect scrollViewRect = self.view.bounds;
@@ -45,6 +46,7 @@
                                        
                     self.galleryImageView.image = [UIImage imageWithData:data];
                     self.galleryImageView.contentMode = UIViewContentModeScaleAspectFit;
+            
                     [self.galleryScrollView addSubview:self.galleryImageView];
                 });
                                    
@@ -58,10 +60,11 @@
     self.galleryScrollView.contentSize = galleryScrollViewSize;
 
     [self.view addSubview:self.galleryScrollView];
-    
+    self.galleryScrollView.delegate = self;
+    [self.galleryScrollView setMaximumZoomScale:5.0f];
+    [self.galleryScrollView setBounces:YES];
     [self.view addSubview:self.backButton];
     [self.view addSubview:self.nextButton];
-    
 }
 
 //Метод для отключения каких-либо действий пользователем, пока не произойдёт смена картинки
@@ -76,6 +79,7 @@
         }
     });
 }
+
 //Метод для чтения даннх которые приходят с JSON файла
 - (void)readDataFromJSON
 {
@@ -87,6 +91,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 #pragma mark - Actions
 
@@ -112,9 +117,13 @@
         frame.origin.y = 0;
         frame.size = self.galleryScrollView.frame.size;
         [self.galleryScrollView scrollRectToVisible:frame animated:YES];
-        
     }
     
     [self ignoringInteractionEvents];
+}
+
+- (IBAction)pinchGesture:(UIPinchGestureRecognizer *)sender
+{
+    
 }
 @end

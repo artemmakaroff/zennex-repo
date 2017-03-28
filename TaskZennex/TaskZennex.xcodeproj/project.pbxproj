@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C07BEA81E8A4E710030DAA8 /* ServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C07BEA71E8A4E710030DAA8 /* ServiceViewController.m */; };
+		2C07BEAC1E8A4EFC0030DAA8 /* ServiceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C07BEAB1E8A4EFC0030DAA8 /* ServiceDownloader.m */; };
+		2C07BEB01E8A4F150030DAA8 /* ServiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C07BEAF1E8A4F150030DAA8 /* ServiceModel.m */; };
+		2C07BEB31E8A57190030DAA8 /* ServiceViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C07BEB21E8A57190030DAA8 /* ServiceViewCell.m */; };
 		2C09F25F1E7F966000C4C1B3 /* TypeEmployeeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C09F25E1E7F966000C4C1B3 /* TypeEmployeeViewCell.m */; };
 		2CB7DB8A1E7B8E8D00C6DBDD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB7DB891E7B8E8D00C6DBDD /* main.m */; };
 		2CB7DB8D1E7B8E8D00C6DBDD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CB7DB8C1E7B8E8D00C6DBDD /* AppDelegate.m */; };
@@ -54,6 +58,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C07BEA61E8A4E710030DAA8 /* ServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceViewController.h; sourceTree = "<group>"; };
+		2C07BEA71E8A4E710030DAA8 /* ServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceViewController.m; sourceTree = "<group>"; };
+		2C07BEAA1E8A4EFC0030DAA8 /* ServiceDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceDownloader.h; sourceTree = "<group>"; };
+		2C07BEAB1E8A4EFC0030DAA8 /* ServiceDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceDownloader.m; sourceTree = "<group>"; };
+		2C07BEAE1E8A4F150030DAA8 /* ServiceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceModel.h; sourceTree = "<group>"; };
+		2C07BEAF1E8A4F150030DAA8 /* ServiceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceModel.m; sourceTree = "<group>"; };
+		2C07BEB11E8A57190030DAA8 /* ServiceViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceViewCell.h; sourceTree = "<group>"; };
+		2C07BEB21E8A57190030DAA8 /* ServiceViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceViewCell.m; sourceTree = "<group>"; };
 		2C09F25D1E7F965F00C4C1B3 /* TypeEmployeeViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeEmployeeViewCell.h; sourceTree = "<group>"; };
 		2C09F25E1E7F966000C4C1B3 /* TypeEmployeeViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TypeEmployeeViewCell.m; sourceTree = "<group>"; };
 		2CB7DB851E7B8E8D00C6DBDD /* TaskZennex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskZennex.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +139,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C07BEA91E8A4E760030DAA8 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2C07BEA61E8A4E710030DAA8 /* ServiceViewController.h */,
+				2C07BEA71E8A4E710030DAA8 /* ServiceViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		2C07BEAD1E8A4F050030DAA8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2C07BEAE1E8A4F150030DAA8 /* ServiceModel.h */,
+				2C07BEAF1E8A4F150030DAA8 /* ServiceModel.m */,
+				2C07BEAA1E8A4EFC0030DAA8 /* ServiceDownloader.h */,
+				2C07BEAB1E8A4EFC0030DAA8 /* ServiceDownloader.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		2CB7DB7C1E7B8E8D00C6DBDD = {
 			isa = PBXGroup;
 			children = (
@@ -152,6 +184,10 @@
 			children = (
 				2CDED7721E89001100AFFDD5 /* List */,
 				2CDED78F1E89509900AFFDD5 /* Gallery */,
+				2C07BEAD1E8A4F050030DAA8 /* Models */,
+				2C07BEA91E8A4E760030DAA8 /* Controllers */,
+				2C07BEB11E8A57190030DAA8 /* ServiceViewCell.h */,
+				2C07BEB21E8A57190030DAA8 /* ServiceViewCell.m */,
 				2CB7DB8B1E7B8E8D00C6DBDD /* AppDelegate.h */,
 				2CB7DB8C1E7B8E8D00C6DBDD /* AppDelegate.m */,
 				2CB7DB911E7B8E8D00C6DBDD /* Main.storyboard */,
@@ -439,16 +475,20 @@
 				2CB7DBC81E7B9CBA00C6DBDD /* AMGroup.m in Sources */,
 				2CB7DBCD1E7BC0DB00C6DBDD /* AddEmployeeViewController.m in Sources */,
 				2CE709DD1E8151BD00861AFE /* TypeBookkeepingViewController.m in Sources */,
+				2C07BEB31E8A57190030DAA8 /* ServiceViewCell.m in Sources */,
 				2CB7DBC21E7B93BE00C6DBDD /* ListTableViewCell.m in Sources */,
 				2CDED77E1E890BE900AFFDD5 /* GalleryViewController.m in Sources */,
 				2CE709E31E81568F00861AFE /* AMTypeBookkeeping.m in Sources */,
 				2CB7DB8A1E7B8E8D00C6DBDD /* main.m in Sources */,
+				2C07BEA81E8A4E710030DAA8 /* ServiceViewController.m in Sources */,
 				2CDED7871E89263A00AFFDD5 /* GalleryModel.m in Sources */,
 				2CE709E01E8152E500861AFE /* TypeBookkeepingTableViewCell.m in Sources */,
 				2CFC21A71E7E46D300B4C9B5 /* TypeEmployeeViewController.m in Sources */,
 				2C09F25F1E7F966000C4C1B3 /* TypeEmployeeViewCell.m in Sources */,
 				2CDED7831E89251900AFFDD5 /* GalleryDownloader.m in Sources */,
+				2C07BEAC1E8A4EFC0030DAA8 /* ServiceDownloader.m in Sources */,
 				2CB7DBBF1E7B92B500C6DBDD /* ListViewController.m in Sources */,
+				2C07BEB01E8A4F150030DAA8 /* ServiceModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

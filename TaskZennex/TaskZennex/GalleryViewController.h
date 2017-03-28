@@ -19,6 +19,7 @@
 
 - (IBAction)backButtonAction:(UIButton *)sender;
 - (IBAction)nextButtonAction:(UIButton *)sender;
+- (IBAction)pinchGesture:(UIPinchGestureRecognizer *)sender;
 
 - (void)readDataFromJSON;
 - (void)ignoringInteractionEvents;
