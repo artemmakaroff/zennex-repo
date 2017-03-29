@@ -18,6 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationController.navigationBar.alpha = 0.7;
 
     
     [self readDataFromJSON];
@@ -122,8 +124,15 @@
     [self ignoringInteractionEvents];
 }
 
-- (IBAction)pinchGesture:(UIPinchGestureRecognizer *)sender
+- (IBAction)backBarButtonAction:(UIBarButtonItem *)sender
 {
-    
+    [self backButtonAction:self.backButton];
 }
+
+- (IBAction)nextBarButtonAction:(UIBarButtonItem *)sender
+{
+    [self nextButtonAction:self.nextButton];
+}
+
+
 @end

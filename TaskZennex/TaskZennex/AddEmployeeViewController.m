@@ -23,8 +23,7 @@ static NSTimeInterval kAnimationDuration = 0.4;
 
     //Устанавливаем пустой лейбл для выбора бухгалтера
     self.positionLabelIsEmpty = YES;
-    
-    //Устанавливаем текст для время обеда/приёма
+    self.typeBookkeepingLabelIsEmpty = YES;
     
     //Создаём делегатов для текстовых полей
     self.nameTextField.delegate = self;
@@ -36,7 +35,7 @@ static NSTimeInterval kAnimationDuration = 0.4;
     //Отключаем ячейку бухгалтера
     [self.bookkeepingCell setHidden:YES];
     
-    //Подписываемся на нотификации клавиатуры
+    //Подписываемся на нотификации
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     
     [nc addObserver:self
@@ -49,6 +48,10 @@ static NSTimeInterval kAnimationDuration = 0.4;
                name:UIKeyboardWillHideNotification
              object:nil];
     
+    [nc addObserver:self
+           selector:@selector(buttonSaveUserInteraction)
+               name:@"buttonSaveUserInteraction"
+             object:nil];
     
     //Создание DatePicker для выбора часов начала обеда/приёма
     self.firstHourPicker = [[UIDatePicker alloc] init];
@@ -138,9 +141,14 @@ static NSTimeInterval kAnimationDuration = 0.4;
     UITapGestureRecognizer *tapGestures = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                   action:@selector(handleTap:)];
     [self.view addGestureRecognizer:tapGestures];
+
+    self.saveButton.userInteractionEnabled = NO;
     
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 //Метод для проверки заполнености полей
 - (void)emptyTextFieldAndLabels
@@ -173,30 +181,64 @@ static NSTimeInterval kAnimationDuration = 0.4;
     }
 }
 
-- (void)dealloc
+#pragma mark - Notifications
+
+- (void)buttonSaveUserInteraction
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSInteger textLength = 1;
+    
+    if (([self.positionLabel.text isEqualToString:@"Руководство"] || [self.positionLabel.text isEqualToString:@"Сотрудники"])
+        && self.nameTextField.text.length > textLength
+        && self.salaryTextField.text.length > textLength
+        && self.firstHoursTextField.text.length > textLength
+        && self.secondHoursTextField.text.length > textLength
+        && self.numberTextField.text.length > textLength) {
+        
+        self.saveButton.userInteractionEnabled = YES;
+        UIImage *saveButtonSelected = [UIImage imageNamed:@"saveButtonSelected.png"];
+        [self.saveButton setBackgroundImage:saveButtonSelected forState:UIControlStateNormal];
+    
+    } else if ([self.positionLabel.text isEqualToString:@"Бухгалтерия"]
+        && self.nameTextField.text.length > textLength
+        && self.salaryTextField.text.length > textLength
+        && self.firstHoursTextField.text.length > textLength
+        && self.secondHoursTextField.text.length > textLength
+        && self.numberTextField.text.length > textLength
+        && self.typeBookkepingLabel.text.length > textLength) {
+        
+        self.saveButton.userInteractionEnabled = YES;
+        UIImage *saveButtonSelected = [UIImage imageNamed:@"saveButtonSelected.png"];
+        [self.saveButton setBackgroundImage:saveButtonSelected forState:UIControlStateNormal];
+    } else {
+        self.saveButton.userInteractionEnabled = NO;
+        
+    }
 }
+
 
 #pragma mark - Delegates
 
-//Метод делегата передающий строку в typeBookkepingLabel
+//Метод делегата принимающий строку в typeBookkepingLabel
 - (void)addTypeViewController:(TypeBookkeepingViewController *)controller didFinishEnterString:(NSString *)string
 {
     self.typeBookkepingLabel.text = string;
+    self.typeBookkeepingLabelIsEmpty = NO;
+    
+    if (self.typeBookkeepingLabelIsEmpty == NO) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"buttonSaveUserInteraction" object:nil];
+    }
 }
 
 //Метод делегата передающий строку в positionLabel и разрешающий редактировать текстовые поля
 - (void)addItemViewController:(TypeEmployeeViewController *)controller didFinishEnteringItem:(NSString *)item
 {
     self.positionLabel.text = item;
-    
     self.positionLabelIsEmpty = NO;
     
     //Отключение ячейки выбора бухгалтерия, если выбран не бухгалтер
     if ([item isEqualToString:@"Бухгалтерия"]) {
         [self.bookkeepingCell setHidden:NO];
-
+        
     } else {
         [self.bookkeepingCell setHidden:YES];
     }
@@ -259,17 +301,12 @@ static NSTimeInterval kAnimationDuration = 0.4;
     [self presentViewController:alertControllerEmptyDictionary animated:YES completion:nil];
 }
 
-//Создаём закрытие для пустых текстовых полей
-//- (void)closeAlertView
-//{
-//    [self dismissViewControllerAnimated:YES completion:nil];
-//}
-
 #pragma mark - TapGestures
 
 //Метод для жеста отключения ввода текста
 - (void)handleTap:(UITapGestureRecognizer *)gesture
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"buttonSaveUserInteraction" object:nil];
     [self.view endEditing:YES];
 }
 
@@ -278,8 +315,6 @@ static NSTimeInterval kAnimationDuration = 0.4;
 //Action для кнопки сохранить
 - (IBAction)saveButtonAction:(UIButton *)sender
 {
-    [self emptyTextFieldAndLabels];
-    
     if ([self.positionLabel.text isEqualToString:@"Руководство"]) {
         self.managementDictionary = [[NSMutableDictionary alloc] init];
         
@@ -355,11 +390,17 @@ static NSTimeInterval kAnimationDuration = 0.4;
     [self.navigationController pushViewController:typeBookkeepingViewController animated:YES];
 }
 
+- (IBAction)cancelButtonAction:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 //Action для кнопки done salaryTextField
 - (void)doneSalaryTextField:(UIBarButtonItem *)barButton
 {
     if (self.salaryTextField.text.length > 0) {
         [UIView animateWithDuration:kAnimationDuration animations:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"buttonSaveUserInteraction" object:nil];
             [self.firstHoursTextField becomeFirstResponder];
         }];
         
@@ -373,6 +414,7 @@ static NSTimeInterval kAnimationDuration = 0.4;
 {
     if (self.firstHoursTextField.text.length > 0) {
         [UIView animateWithDuration:kAnimationDuration animations:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"buttonSaveUserInteraction" object:nil];
             [self.secondHoursTextField becomeFirstResponder];
         }];
         
@@ -386,6 +428,7 @@ static NSTimeInterval kAnimationDuration = 0.4;
 {
     if (self.secondHoursTextField.text.length > 0) {
         [UIView animateWithDuration:kAnimationDuration animations:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"buttonSaveUserInteraction" object:nil];
             [self.numberTextField becomeFirstResponder];
         }];
         
@@ -399,6 +442,7 @@ static NSTimeInterval kAnimationDuration = 0.4;
 {
     if (self.numberTextField.text.length > 0) {
         [UIView animateWithDuration:kAnimationDuration animations:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"buttonSaveUserInteraction" object:nil];
             [self.numberTextField resignFirstResponder];
         }];
         
@@ -412,6 +456,7 @@ static NSTimeInterval kAnimationDuration = 0.4;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if ([textField isEqual:self.nameTextField] && self.nameTextField.text.length > 0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"buttonSaveUserInteraction" object:nil];
         [self.salaryTextField becomeFirstResponder];
         
     } else {

@@ -63,7 +63,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"buttonSaveUserInteraction" object:nil];
+    
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
     

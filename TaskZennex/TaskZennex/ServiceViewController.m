@@ -20,12 +20,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 80;
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
     [self readDataFromJSON];
     
 }
+
 //Метод возращающий нам массив который мы получили из ServiceDownloader
 - (void)readDataFromJSON
 {
@@ -56,6 +60,7 @@
     static NSString *serviceIdentifier = @"ServiceIdentifier";
     
     ServiceViewCell *cell = [tableView dequeueReusableCellWithIdentifier:serviceIdentifier forIndexPath:indexPath];
+
     
     if (cell == nil) {
         cell = [[ServiceViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:serviceIdentifier];
@@ -63,13 +68,10 @@
     
     ServiceModel *serviceModel = [self.serviceArray objectAtIndex:indexPath.row];
     
-
-    
     cell.idLabel.text = [NSString stringWithFormat:@"ID: %@", serviceModel.idString];
     cell.descriptionLabel.text = [NSString stringWithFormat:@"%@", serviceModel.descriptionString];
     cell.timeLabel.text = [NSString stringWithFormat:@"Время: %@", serviceModel.timeString];
     cell.ratingLabel.text = [NSString stringWithFormat:@"Рейтинг: %@", serviceModel.ratingString];
-    
     
     return cell;
 }

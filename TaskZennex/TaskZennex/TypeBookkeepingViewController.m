@@ -61,14 +61,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-//    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"buttonSaveUserInteraction" object:nil];
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    
     NSInteger row = indexPath.row;
     
     NSString *string = [NSString stringWithFormat:@"%@", self.bookkepingArray[row]];
-    NSLog(@"%@", string);
 
     [self.delegate addTypeViewController:self didFinishEnterString:string];
     

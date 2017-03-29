@@ -15,28 +15,78 @@
 
 @end
 
+static NSString *kSettingManagement     = @"management";
+static NSString *kSettingEmployee       = @"employee";
+static NSString *kSettingBookkeeping    = @"bookkeeping";
+static NSString *kSettingPosition       = @"position";
+
+
+static NSString *kSettingManagementDictionary     = @"managementDictionary";
+static NSString *kSettingEmployeeDictionary       = @"employeeDictionary";
+static NSString *kSettingBookkeepingDictionary    = @"bookkeepingDictionary";
+static NSString *kSettingPositionDictionary       = @"positionDicitonary";
+
 @implementation ListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.sectionArray = [[NSArray alloc] init];
     
     AMGroup *group = [[AMGroup alloc] init];
     
     self.sectionArray = [group employeesGroupArray];
-
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
+    self.editBarButton.title = @"Edit";
     
     self.managementArray = [NSMutableArray array];
     self.employeeArray = [NSMutableArray array];
     self.bookkeepingArray = [NSMutableArray array];
     
+    self.managementDictionary = [NSMutableDictionary dictionary];
+    self.employeeDictionary = [NSMutableDictionary dictionary];
+    self.bookkeepingDictionary = [NSMutableDictionary dictionary];
     self.positionDictionary = [NSMutableDictionary dictionary];
-    self.positionArray = [NSMutableArray array];
     
-    self.editBarButton.title = @"Edit";
+    [self loadSettings];
+}
+
+#pragma mark - Save and Load
+
+- (void)saveSettings
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    [userDefaults setObject:self.managementArray forKey:kSettingManagement];
+    [userDefaults setObject:self.employeeArray forKey:kSettingEmployee];
+    [userDefaults setObject:self.bookkeepingArray forKey:kSettingBookkeeping];
+    [userDefaults setObject:self.positionArray forKey:kSettingPosition];
+    
+    [userDefaults setObject:self.managementDictionary forKey:kSettingManagementDictionary];
+    [userDefaults setObject:self.employeeDictionary forKey:kSettingEmployeeDictionary];
+    [userDefaults setObject:self.bookkeepingDictionary forKey:kSettingBookkeepingDictionary];
+    [userDefaults setObject:self.positionDictionary forKey:kSettingPositionDictionary];
+
+    [userDefaults synchronize];
+}
+
+- (void)loadSettings
+{
+
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+
+    self.managementArray = [[userDefaults arrayForKey:kSettingManagement] mutableCopy];
+    self.employeeArray = [[userDefaults arrayForKey:kSettingEmployee] mutableCopy];
+    self.bookkeepingArray = [[userDefaults arrayForKey:kSettingBookkeeping] mutableCopy];
+    self.positionArray = [[userDefaults arrayForKey:kSettingPosition] mutableCopy];
+    
+    self.managementDictionary = [[userDefaults dictionaryForKey:kSettingManagementDictionary] mutableCopy];
+    self.employeeDictionary = [[userDefaults dictionaryForKey:kSettingEmployeeDictionary] mutableCopy];
+    self.bookkeepingDictionary = [[userDefaults dictionaryForKey:kSettingBookkeepingDictionary] mutableCopy];
+    self.positionDictionary = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSettingPositionDictionary] mutableCopy];
     
 }
 
@@ -46,29 +96,38 @@
 }
 
 #pragma mark - Delegates
+
 - (void)addEmployeeViewController:(AddEmployeeViewController *)controller endItemDictionary:(NSMutableDictionary *)dictionary
 {
+    
     if ([[dictionary objectForKey:@"position"] isEqualToString:@"Руководство"]) {
         [self.managementArray addObject:dictionary];
-
+        
         [self.positionDictionary setObject:self.managementArray forKey:@"Руководство"];
-        NSLog(@"%@", self.positionDictionary);
+        
         [self.positionArray addObject:self.positionDictionary];
+        
+        [self saveSettings];
         [self.tableView reloadData];
+        
 
     } else if ([[dictionary objectForKey:@"position"] isEqualToString:@"Сотрудники"]) {
         [self.employeeArray addObject:dictionary];
 
         [self.positionDictionary setObject:self.employeeArray forKey:@"Сотрудники"];
         [self.positionArray addObject:self.positionDictionary];
+        [self saveSettings];
         [self.tableView reloadData];
+        
     
     } else if ([[dictionary objectForKey:@"position"] isEqualToString:@"Бухгалтерия"]) {
         [self.bookkeepingArray addObject:dictionary];
 
         [self.positionDictionary setObject:self.bookkeepingArray forKey:@"Бухгалтерия"];
         [self.positionArray addObject:self.positionDictionary];
+        [self saveSettings];
         [self.tableView reloadData];
+        
     }
 
 }
@@ -82,12 +141,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (self.positionArray.count < 1) {
-        return @"";
-        
-    } else {
     return [self.sectionArray objectAtIndex:section];
-    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -109,7 +163,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     static NSString *reuseIdentfier = @"reuseIdentfier";
     
     ListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentfier forIndexPath:indexPath];
@@ -120,8 +173,9 @@
         
         cell.nameLabel.text = [NSString stringWithFormat:@"ФИО: %@", [self.managementDictionary objectForKey:@"name"]];
         cell.salaryLabel.text = [NSString stringWithFormat:@"Зарплата: %@", [self.managementDictionary objectForKey:@"salary"]];
-        cell.firstHoursLabel.text = [NSString stringWithFormat:@"Часы приёма с: %@", [self.managementDictionary objectForKey:@"firstHour"]];
-        cell.secondHoursLabel.text = [NSString stringWithFormat:@"до: %@", [self.managementDictionary objectForKey:@"secondHour"]];
+        cell.firstHoursLabel.text = [NSString stringWithFormat:@"Часы обеда с: %@ до: %@",
+                                     [self.managementDictionary objectForKey:@"firstHour"], [self.managementDictionary objectForKey:@"secondHour"]];
+
         cell.numberLabel.text = [NSString stringWithFormat:@"№: %@", [self.managementDictionary objectForKey:@"number"]];
         
     } else if (indexPath.section == 1) {
@@ -130,8 +184,9 @@
         
         cell.nameLabel.text = [NSString stringWithFormat:@"ФИО: %@", [self.employeeDictionary objectForKey:@"name"]];
         cell.salaryLabel.text = [NSString stringWithFormat:@"Зарплата: %@", [self.employeeDictionary objectForKey:@"salary"]];
-        cell.firstHoursLabel.text = [NSString stringWithFormat:@"Часы обеда с: %@", [self.employeeDictionary objectForKey:@"firstHour"]];
-        cell.secondHoursLabel.text = [NSString stringWithFormat:@"до: %@", [self.employeeDictionary objectForKey:@"secondHour"]];
+        cell.firstHoursLabel.text = [NSString stringWithFormat:@"Часы обеда с: %@ до: %@",
+                                    [self.employeeDictionary objectForKey:@"firstHour"], [self.employeeDictionary objectForKey:@"secondHour"]];
+        
         cell.numberLabel.text = [NSString stringWithFormat:@"№: %@", [self.employeeDictionary objectForKey:@"number"]];
     
     } else if (indexPath.section == 2) {
@@ -140,28 +195,15 @@
         
         cell.nameLabel.text = [NSString stringWithFormat:@"ФИО: %@", [self.bookkeepingDictionary objectForKey:@"name"]];
         cell.salaryLabel.text = [NSString stringWithFormat:@"Зарплата: %@", [self.bookkeepingDictionary objectForKey:@"salary"]];
-        cell.firstHoursLabel.text = [NSString stringWithFormat:@"Часы обеда с: %@", [self.bookkeepingDictionary objectForKey:@"firstHour"]];
-        cell.secondHoursLabel.text = [NSString stringWithFormat:@"до: %@", [self.bookkeepingDictionary objectForKey:@"secondHour"]];
+        cell.firstHoursLabel.text = [NSString stringWithFormat:@"Часы обеда с: %@ до: %@" ,
+                                    [self.bookkeepingDictionary objectForKey:@"firstHour"],[self.bookkeepingDictionary objectForKey:@"secondHour"]];
+        
         cell.numberLabel.text = [NSString stringWithFormat:@"№: %@", [self.bookkeepingDictionary objectForKey:@"number"]];
         cell.typeLabel.text = [NSString stringWithFormat:@"Тип бухгалтера: %@", [self.bookkeepingDictionary objectForKey:@"typeBookkeeping"]];
 
     }
     
     return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.section == 0) {
-        return 100;
-    } else  if (indexPath.section == 1) {
-        return 100;
-    } else if (indexPath.section == 2) {
-        return 130;
-    }
-
-    return indexPath.section;
-    
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -171,6 +213,7 @@
             [self.managementArray removeObjectAtIndex:indexPath.row];
             
             [self.tableView beginUpdates];
+            [self saveSettings];
             [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
             [self.tableView endUpdates];
             
@@ -178,6 +221,7 @@
             [self.employeeArray removeObjectAtIndex:indexPath.row];
             
             [self.tableView beginUpdates];
+            [self saveSettings];
             [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
             [self.tableView endUpdates];
             
@@ -185,6 +229,7 @@
             [self.bookkeepingArray removeObjectAtIndex:indexPath.row];
             
             [self.tableView beginUpdates];
+            [self saveSettings];
             [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
             [self.tableView endUpdates];
         }
@@ -197,6 +242,19 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    AddEmployeeViewController *addEmployeeViewController = [storyboard instantiateViewControllerWithIdentifier:@"AddEmployeeViewController"];
+
+    addEmployeeViewController.delegate = self;
+    
+    [self.navigationController pushViewController:addEmployeeViewController animated:YES];
+}
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -241,8 +299,4 @@
 }
 
 @end
-
-
-
-
 

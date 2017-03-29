@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ServiceViewController : UITableViewController
+@interface ServiceViewController : UITableViewController 
 
 @property (strong, nonatomic) NSArray *serviceArray;
 

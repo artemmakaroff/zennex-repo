@@ -36,7 +36,7 @@
 }
 
 - (NSArray *)parsingJSON
-{
+{    
     
     NSString *jsonBundle = [[NSBundle mainBundle] pathForResource:@"pictures"
                                                             ofType:@"json"];

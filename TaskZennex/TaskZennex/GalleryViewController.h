@@ -16,10 +16,11 @@
 @property (strong, nonatomic) IBOutlet UIImageView *galleryImageView;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *nextBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
 
 - (IBAction)backButtonAction:(UIButton *)sender;
 - (IBAction)nextButtonAction:(UIButton *)sender;
-- (IBAction)pinchGesture:(UIPinchGestureRecognizer *)sender;
 
 - (void)readDataFromJSON;
 - (void)ignoringInteractionEvents;

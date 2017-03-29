@@ -27,8 +27,10 @@
 @property (strong, nonatomic) UIDatePicker *firstHourPicker;
 @property (strong, nonatomic) UIDatePicker *secondHourPicker;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButton;
 
+@property (assign, nonatomic) BOOL typeBookkeepingLabelIsEmpty;
 @property (assign, nonatomic) BOOL positionLabelIsEmpty;
 @property (assign, nonatomic) BOOL saveButtonIsOn;
 @property (weak, nonatomic) id <AddEmployeeViewControllerDelegate> delegate;
@@ -40,6 +42,7 @@
 - (IBAction)saveBarButtonAction:(UIBarButtonItem *)sender;
 - (IBAction)openTypeEmployeeViewController:(UIButton *)sender;
 - (IBAction)typeBookkeepingButtonAction:(UIButton *)sender;
+- (IBAction)cancelButtonAction:(UIButton *)sender;
 
 
 @end

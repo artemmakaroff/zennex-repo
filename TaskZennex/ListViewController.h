@@ -20,9 +20,17 @@
 @property (strong, nonatomic) NSMutableDictionary *employeeDictionary;
 @property (strong, nonatomic) NSMutableDictionary *bookkeepingDictionary;
 @property (strong, nonatomic) NSMutableDictionary *positionDictionary;
+
+@property (strong, nonatomic) NSArray *sortedManagementArray;
+@property (strong, nonatomic) NSArray *sortedEmployeeArray;
+@property (strong, nonatomic) NSArray *sortedBookkeepingArray;
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButton;
 
 - (IBAction)addBarButtonAction:(UIBarButtonItem *)sender;
 - (IBAction)editBarButtonAction:(UIBarButtonItem *)sender;
+
+- (void)saveSettings;
+- (void)loadSettings;
 
 @end

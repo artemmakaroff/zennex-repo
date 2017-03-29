@@ -41,10 +41,17 @@
     
     NSError *error;
     NSString *urlString = [NSString stringWithFormat: @"http://quotes.zennex.ru/api/v3/bash/quotes?sort=time"];
-    
-    NSData *data = [NSData dataWithContentsOfURL: [NSURL URLWithString:urlString]];
 
-    NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+    
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+
+
+    
+    NSMutableString *stringFromData = [[NSMutableString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+
+    NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:[stringFromData dataUsingEncoding:NSUTF8StringEncoding]
+                                                               options:NSJSONReadingMutableLeaves
+                                                                 error:&error];
     
     NSArray *jsonArray = [jsonObject objectForKey:@"quotes"];
     
@@ -53,9 +60,7 @@
     for (NSDictionary *dict in jsonArray) {
         ServiceModel *serviceModel = [[ServiceModel alloc] initWithJSONResponse:dict];
         [array addObject:serviceModel];
-        //NSLog(@"%@", array);
     }
-    
 
     return array;
     
